@@ -5,10 +5,22 @@ require('dotenv').config();
 
 let credential;
 
-if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+if (process.env.FIREBASE_SERVICE_ACCOUNT_BASE64) {
+  try {
+    const raw = Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_BASE64.trim(), 'base64').toString('utf8');
+    const parsed = JSON.parse(raw);
+    credential = admin.credential.cert(parsed);
+    console.log('[FIREBASE] Successfully initialized credentials from FIREBASE_SERVICE_ACCOUNT_BASE64');
+  } catch (err) {
+    console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT_BASE64:', err.message);
+  }
+}
+
+if (!credential && process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
   try {
     const parsed = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
     credential = admin.credential.cert(parsed);
+    console.log('[FIREBASE] Successfully initialized credentials from FIREBASE_SERVICE_ACCOUNT_JSON');
   } catch (err) {
     console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT_JSON from environment variable:', err.message);
   }
@@ -43,15 +55,10 @@ if (credential && databaseURL) {
     credential,
     databaseURL
   });
-} else if (databaseURL) {
-  // Attempt default credential initialization (e.g. Google Cloud Run or GCE)
-  try {
-    admin.initializeApp({
-      databaseURL
-    });
-  } catch (err) {
-    console.error('Firebase initialization fallback failed:', err.message);
-  }
+  console.log('[FIREBASE] Connected successfully to Realtime Database:', databaseURL);
+} else {
+  console.error('[CRITICAL] Missing valid Firebase credentials or databaseURL!');
+  console.error('Please configure FIREBASE_SERVICE_ACCOUNT_BASE64 or FIREBASE_SERVICE_ACCOUNT_JSON in environment variables.');
 }
 
 const rtdb = admin.apps.length > 0 ? admin.database() : null;

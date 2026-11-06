@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getApiUrl } from '../config/api';
 import { getRoomTheme } from '../config/theme';
@@ -27,19 +27,23 @@ export default function JoinRoom() {
   const handleStartExam = async () => {
     setIsSubmitting(true);
     try {
-      if (document.documentElement.requestFullscreen) {
-        try {
-          await document.documentElement.requestFullscreen();
-        } catch (fsErr) {
-          console.warn('Fullscreen permission requested:', fsErr);
-        }
+      // Non-blocking fullscreen attempt (mobile browsers may reject or delay promise)
+      if (document.documentElement && document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch((fsErr) => {
+          console.warn('Fullscreen request dismissed or not supported:', fsErr);
+        });
       }
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
 
       const res = await fetch(getApiUrl('/api/join'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ roomCode, name: name.trim() })
+        body: JSON.stringify({ roomCode, name: name.trim() }),
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
 
       const data = await res.json();
       if (!res.ok) {
@@ -54,7 +58,11 @@ export default function JoinRoom() {
       localStorage.setItem('timePerQuestion', data.timePerQuestion || 30);
       navigate(`/quiz/${data.sessionToken}`);
     } catch (err) {
-      alert('Error entering exam mode: ' + err.message);
+      if (err.name === 'AbortError') {
+        alert('Server connection timed out. Please check your internet connection and verify backend Firebase status.');
+      } else {
+        alert('Error entering exam mode: ' + err.message);
+      }
       setIsSubmitting(false);
     }
   };
