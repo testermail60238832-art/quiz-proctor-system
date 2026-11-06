@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const crypto = require('crypto');
 const dbService = require('../services/dbService');
 const { recomputeRanks } = require('../services/rankingService');
@@ -30,6 +30,7 @@ router.post('/join', async (req, res) => {
       session_token: sessionToken,
       status: 'in_progress',
       score: 0,
+      marks: 0,
       rank: null,
       terminated_reason: null,
       last_ping: Date.now(),
@@ -187,6 +188,7 @@ router.post('/violation', async (req, res) => {
     await dbService.updateCandidate(candidate.id, {
       status: 'disqualified',
       score: totalScore,
+      marks: totalScore,
       submitted_at: Date.now(),
       terminated_reason: type
     });
@@ -241,6 +243,7 @@ router.post('/submit', async (req, res) => {
     await dbService.updateCandidate(candidate.id, {
       status: 'submitted',
       score: totalScore,
+      marks: totalScore,
       submitted_at: Date.now()
     });
 
@@ -273,3 +276,4 @@ router.get('/result/:candidateId', async (req, res) => {
 });
 
 module.exports = router;
+

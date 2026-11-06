@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+﻿import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useProctoring from '../hooks/useProctoring';
 import { getApiUrl } from '../config/api';
@@ -15,8 +15,8 @@ export default function Quiz() {
   const [loading, setLoading] = useState(true);
   const [timePerQuestion, setTimePerQuestion] = useState(30);
 
-  const roomName = localStorage.getItem('roomName') || '';
-  const theme = getRoomTheme(roomName);
+  const roomIdentifier = localStorage.getItem('roomCode') || localStorage.getItem('roomName') || '';
+  const theme = getRoomTheme(roomIdentifier);
 
   const selectedOptionRef = useRef(selectedOption);
   const currentIndexRef = useRef(currentIndex);
@@ -43,7 +43,7 @@ export default function Quiz() {
       .then((data) => {
         if (data && data.questions) {
           if (data.questions.length === 0) {
-            alert('No questions configured in this room yet. Please contact the administrator.');
+            alert('No questions configured in this assessment yet. Please notify the invigilator.');
             navigate('/');
             return;
           }
@@ -142,7 +142,7 @@ export default function Quiz() {
   if (loading) {
     return (
       <div className={`min-h-screen ${theme.bg} ${theme.textLight} flex items-center justify-center font-bold tracking-widest text-sm uppercase`}>
-        Initializing Secure Exam Environment...
+        Initializing Secure Assessment Environment...
       </div>
     );
   }
@@ -161,7 +161,7 @@ export default function Quiz() {
   return (
     <div className={`min-h-screen ${theme.bg} ${theme.textLight} quiz-lock flex flex-col justify-between p-8 select-none`}>
       {/* Top Header: Progress and Timer */}
-      <div className={`flex justify-between items-center ${theme.headerBg} p-4 rounded-xl shadow-lg`}>
+      <div className={`flex justify-between items-center ${theme.headerBg} p-4 rounded-xl shadow-lg border-b-2 ${theme.border}`}>
         <div>
           <span className={`text-lg font-extrabold ${theme.text}`}>
             Question {currentIndex + 1} of {questions.length}
@@ -224,15 +224,15 @@ export default function Quiz() {
           <button
             type="button"
             onClick={handleFinalSubmit}
-            className={`${theme.buttonBg} px-8 py-3 rounded-lg uppercase tracking-wider transition-all`}
+            className={`${theme.buttonBg} px-8 py-3 rounded-xl uppercase tracking-wider transition-all`}
           >
-            Submit Quiz
+            Submit Assessment
           </button>
         ) : (
           <button
             type="button"
             onClick={handleNext}
-            className={`${theme.buttonBg} px-8 py-3 rounded-lg uppercase tracking-wider transition-all`}
+            className={`${theme.buttonBg} px-8 py-3 rounded-xl uppercase tracking-wider transition-all`}
           >
             Next Question
           </button>

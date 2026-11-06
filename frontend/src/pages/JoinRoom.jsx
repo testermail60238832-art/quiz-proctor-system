@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getApiUrl } from '../config/api';
 import { getRoomTheme } from '../config/theme';
@@ -43,12 +43,13 @@ export default function JoinRoom() {
 
       const data = await res.json();
       if (!res.ok) {
-        alert(data.error || 'Failed to join room');
+        alert(data.error || 'Failed to join assessment');
         setIsSubmitting(false);
         return;
       }
 
       localStorage.setItem('candidateId', data.candidateId);
+      localStorage.setItem('roomCode', roomCode);
       localStorage.setItem('roomName', data.roomName || roomCode);
       localStorage.setItem('timePerQuestion', data.timePerQuestion || 30);
       navigate(`/quiz/${data.sessionToken}`);
@@ -60,31 +61,33 @@ export default function JoinRoom() {
 
   return (
     <div className={`min-h-screen ${theme.bg} ${theme.textLight} flex items-center justify-center p-6`}>
-      <div className={`max-w-md w-full ${theme.cardBg} border-2 ${theme.border} rounded-xl p-8 shadow-2xl space-y-6`}>
+      <div className={`max-w-md w-full ${theme.cardBg} border-2 ${theme.border} rounded-2xl p-8 shadow-2xl space-y-6`}>
         <div className="flex justify-between items-center border-b border-slate-700/60 pb-3">
-          <h2 className={`text-lg font-bold uppercase tracking-tight ${theme.text}`}>Candidate Registration</h2>
+          <h2 className={`text-lg font-extrabold uppercase tracking-tight ${theme.text}`}>Candidate Registration</h2>
           <button
             onClick={() => navigate('/')}
             className="text-xs text-slate-400 hover:underline"
           >
-            Change Room
+            Change Code
           </button>
         </div>
 
-        <div className="flex items-center justify-between p-3 rounded bg-slate-900/50 border border-slate-700/50">
-          <span className="text-xs uppercase font-bold text-slate-400">Assigned Access Code:</span>
-          <span className={`font-mono font-extrabold ${theme.text} tracking-widest text-sm`}>{roomCode}</span>
+        <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-slate-700/50">
+          <span className="text-xs uppercase font-extrabold text-slate-400">Access Status:</span>
+          <span className={`font-mono font-extrabold ${theme.text} tracking-wider text-xs uppercase px-2 py-0.5 rounded bg-black/50 border border-current`}>
+            Authorized Session
+          </span>
         </div>
 
         <form onSubmit={handleOpenModal} className="space-y-4">
           <div>
-            <label className={`block text-xs uppercase font-bold mb-2 ${theme.text}`}>Enter Your Full Name</label>
+            <label className={`block text-xs uppercase font-extrabold mb-2 ${theme.text}`}>Enter Your Full Name</label>
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className={`w-full ${theme.inputBg} p-3 rounded outline-none font-medium border-2`}
+              className={`w-full ${theme.inputBg} p-3 rounded-xl outline-none font-medium border-2`}
               placeholder="e.g. John Doe"
             />
           </div>
@@ -93,7 +96,7 @@ export default function JoinRoom() {
 
           <button
             type="submit"
-            className={`w-full ${theme.buttonBg} py-3 rounded uppercase tracking-wider transition-all`}
+            className={`w-full ${theme.buttonBg} py-3.5 rounded-xl uppercase tracking-wider font-extrabold transition-all transform hover:-translate-y-0.5`}
           >
             Continue
           </button>
@@ -102,8 +105,8 @@ export default function JoinRoom() {
 
       {/* Warning Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className={`${theme.cardBg} max-w-lg w-full p-6 border-2 ${theme.border} rounded-xl shadow-2xl space-y-4 text-slate-100`}>
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <div className={`${theme.cardBg} max-w-lg w-full p-6 border-2 ${theme.border} rounded-2xl shadow-2xl space-y-4 text-slate-100`}>
             <h3 className="text-red-500 font-extrabold uppercase tracking-wide flex items-center space-x-2">
               <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -126,7 +129,7 @@ export default function JoinRoom() {
                 type="button"
                 onClick={() => setShowModal(false)}
                 disabled={isSubmitting}
-                className="border border-slate-600 px-4 py-2 text-sm rounded text-slate-300 hover:bg-slate-800"
+                className="border border-slate-600 px-4 py-2 text-sm rounded-lg text-slate-300 hover:bg-slate-800"
               >
                 Cancel
               </button>
@@ -134,7 +137,7 @@ export default function JoinRoom() {
                 type="button"
                 onClick={handleStartExam}
                 disabled={isSubmitting}
-                className="bg-red-600 text-white font-bold px-4 py-2 text-sm rounded hover:bg-red-700 disabled:opacity-50"
+                className="bg-red-600 text-white font-bold px-4 py-2 text-sm rounded-lg hover:bg-red-700 disabled:opacity-50"
               >
                 {isSubmitting ? 'Starting Exam...' : 'I Understand — Start Quiz'}
               </button>
