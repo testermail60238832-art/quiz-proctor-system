@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const crypto = require('crypto');
 const dbService = require('../services/dbService');
 const { recomputeRanks } = require('../services/rankingService');
@@ -83,17 +83,32 @@ router.get('/questions-init/:sessionToken', async (req, res) => {
     const rawQuestions = await dbService.getQuestionsByRoom(candidate.room_id);
     const activeQuestions = rawQuestions.filter((q) => q.is_active !== false);
 
-    // Randomize question sequence per candidate using Fisher-Yates
-    const shuffledQuestions = fisherYatesShuffle(activeQuestions);
+    // Randomize / Jumble question sequence per candidate using Fisher-Yates
+    let orderedQuestions = [];
+    if (candidate.question_order && Array.isArray(candidate.question_order) && candidate.question_order.length > 0) {
+      // Re-use already assigned unique jumbled order (ensures seamless reconnect/refresh)
+      const qMap = new Map(activeQuestions.map((q) => [q.id, q]));
+      orderedQuestions = candidate.question_order.map((id) => qMap.get(id)).filter(Boolean);
+      const existingIds = new Set(candidate.question_order);
+      const remaining = activeQuestions.filter((q) => !existingIds.has(q.id));
+      if (remaining.length > 0) {
+        orderedQuestions = orderedQuestions.concat(remaining);
+      }
+    } else {
+      // Generate a fresh random jumbled question order for this candidate
+      orderedQuestions = fisherYatesShuffle(activeQuestions);
+      const orderIds = orderedQuestions.map((q) => q.id);
+      await dbService.updateCandidate(candidate.id, { question_order: orderIds });
+    }
 
-    // Sanitize and shuffle answer choices per question (stripping correct_option)
-    const prepared = shuffledQuestions.map((q) => {
-      const options = fisherYatesShuffle([
+    // Clean options: A, B, C, D in order with their corresponding text
+    const prepared = orderedQuestions.map((q) => {
+      const options = [
         { key: 'A', text: q.option_a },
         { key: 'B', text: q.option_b },
         { key: 'C', text: q.option_c },
         { key: 'D', text: q.option_d }
-      ]);
+      ];
 
       return {
         id: q.id,
