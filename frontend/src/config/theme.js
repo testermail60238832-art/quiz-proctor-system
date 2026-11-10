@@ -1,4 +1,4 @@
-﻿// ==============================================================================
+// ==============================================================================
 // Dynamic Color Themes:
 // 1. General Interface / Admin Portal: Blue mixed with Gold
 // 2. Room 1 (R1): Orange & Lavender
@@ -93,4 +93,36 @@ export function getRoomTheme(roomCodeOrName) {
   }
 
   return GENERAL_THEME;
+}
+
+/**
+ * Get display title for Room 1 ("Tech MCQs") and Room 2 ("Circuit & Code Arena")
+ */
+export function getRoomDisplayName(roomCodeOrName) {
+  if (!roomCodeOrName) return 'ECLECTICA II Assessment';
+  const str = String(roomCodeOrName).toUpperCase();
+
+  if (
+    str.includes('R1') ||
+    str.includes('ROOM 1') ||
+    str.includes('ROOM_1') ||
+    str.includes('MCQ')
+  ) {
+    return "Tech MCQs";
+  }
+
+  if (
+    str.includes('R2') ||
+    str.includes('R3') ||
+    str.includes('R23') ||
+    str.includes('ROOM 2') ||
+    str.includes('ROOM 3') ||
+    str.includes('ROOM_2') ||
+    str.includes('ROOM_3') ||
+    str.includes('COMMUNICATION')
+  ) {
+    return "Circuit & Code Arena";
+  }
+
+  return roomCodeOrName;
 }

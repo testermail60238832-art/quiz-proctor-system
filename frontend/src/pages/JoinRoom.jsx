@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getApiUrl } from '../config/api';
-import { getRoomTheme } from '../config/theme';
+import { getRoomTheme, getRoomDisplayName } from '../config/theme';
 
 export default function JoinRoom() {
   const { roomCode } = useParams();
@@ -54,7 +54,7 @@ export default function JoinRoom() {
 
       localStorage.setItem('candidateId', data.candidateId);
       localStorage.setItem('roomCode', roomCode);
-      localStorage.setItem('roomName', data.roomName || roomCode);
+      localStorage.setItem('roomName', getRoomDisplayName(data.roomName || roomCode));
       localStorage.setItem('timePerQuestion', data.timePerQuestion || 30);
       navigate(`/quiz/${data.sessionToken}`);
     } catch (err) {
@@ -71,7 +71,12 @@ export default function JoinRoom() {
     <div className={`min-h-screen ${theme.bg} ${theme.textLight} flex items-center justify-center p-6`}>
       <div className={`max-w-md w-full ${theme.cardBg} border-2 ${theme.border} rounded-2xl p-8 shadow-2xl space-y-6`}>
         <div className="flex justify-between items-center border-b border-slate-700/60 pb-3">
-          <h2 className={`text-lg font-extrabold uppercase tracking-tight ${theme.text}`}>Candidate Registration</h2>
+          <div>
+            <h2 className={`text-lg font-extrabold uppercase tracking-tight ${theme.text}`}>Candidate Registration</h2>
+            <p className="text-xs font-bold uppercase tracking-wider text-amber-300">
+              {getRoomDisplayName(roomCode)}
+            </p>
+          </div>
           <button
             onClick={() => navigate('/')}
             className="text-xs text-slate-400 hover:underline"
@@ -81,9 +86,9 @@ export default function JoinRoom() {
         </div>
 
         <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-slate-700/50">
-          <span className="text-xs uppercase font-extrabold text-slate-400">Access Status:</span>
-          <span className={`font-mono font-extrabold ${theme.text} tracking-wider text-xs uppercase px-2 py-0.5 rounded bg-black/50 border border-current`}>
-            Authorized Session
+          <span className="text-xs uppercase font-extrabold text-slate-400">Selected Arena:</span>
+          <span className={`font-mono font-extrabold ${theme.text} tracking-wider text-xs uppercase px-2.5 py-1 rounded bg-black/50 border border-current`}>
+            {getRoomDisplayName(roomCode)}
           </span>
         </div>
 

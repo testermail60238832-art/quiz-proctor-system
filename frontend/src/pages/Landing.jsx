@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GENERAL_THEME } from '../config/theme';
 
@@ -35,17 +35,19 @@ export default function Landing() {
       </div>
 
       <div className="max-w-md w-full mx-auto text-center space-y-6">
-        <div className="space-y-3">
-          <div className="inline-block p-4 rounded-2xl bg-gradient-to-br from-amber-500/20 to-blue-900/40 border border-amber-500/40 shadow-xl">
-            <svg className="w-10 h-10 text-amber-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
+        <div className="space-y-4">
+          <div className="inline-block p-1.5 rounded-3xl bg-gradient-to-br from-amber-500/30 via-blue-900/50 to-amber-500/20 border-2 border-amber-400/60 shadow-2xl backdrop-blur-md">
+            <img
+              src="/logo.jpg"
+              alt="ECLECTICA II TECH-QUIZ Logo"
+              className="w-28 h-28 md:w-36 md:h-36 object-contain rounded-2xl mx-auto shadow-inner"
+            />
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-500 uppercase">
-            ECE Assessment Portal
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-500 uppercase">
+            ECLECTICA II TECH-QUIZ
           </h1>
-          <p className="text-xs text-slate-400 uppercase tracking-widest">
-            Strict Multi-Vector Proctoring & Live Ranking
+          <p className="text-xs font-bold text-amber-300/80 uppercase tracking-widest">
+            Official Technical Assessment & Proctoring Portal
           </p>
         </div>
 

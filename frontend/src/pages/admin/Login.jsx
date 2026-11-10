@@ -39,7 +39,10 @@ export default function Login() {
     <div className={`min-h-screen ${GENERAL_THEME.bg} text-slate-100 flex items-center justify-center p-6`}>
       <div className={`max-w-sm w-full ${GENERAL_THEME.cardBg} border-2 ${GENERAL_THEME.border} p-6 rounded-2xl shadow-2xl space-y-4`}>
         <div className="flex justify-between items-center border-b border-slate-700/60 pb-3">
-          <h1 className={`text-lg font-extrabold uppercase tracking-tight ${GENERAL_THEME.text}`}>Admin Authentication</h1>
+          <div className="flex items-center space-x-2">
+            <img src="/logo.jpg" alt="Logo" className="w-8 h-8 object-contain rounded-lg border border-amber-400/50" />
+            <h1 className={`text-base font-extrabold uppercase tracking-tight ${GENERAL_THEME.text}`}>Admin Portal</h1>
+          </div>
           <Link to="/" className="text-xs text-slate-400 hover:underline">
             Home
           </Link>

@@ -1,8 +1,8 @@
-﻿import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useSearchParams, Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import { getApiUrl, getSocketUrl } from '../config/api';
-import { getRoomTheme } from '../config/theme';
+import { getRoomTheme, getRoomDisplayName } from '../config/theme';
 
 export default function Result() {
   const { candidateId } = useParams();
@@ -144,9 +144,14 @@ export default function Result() {
         {/* Live Leaderboard */}
         <div className={`${theme.cardBg} border-2 ${theme.border} p-6 rounded-2xl shadow-2xl space-y-4`}>
           <div className="flex justify-between items-center border-b border-slate-700/60 pb-3">
-            <h2 className={`text-lg font-bold uppercase ${theme.text}`}>
-              Official Room Leaderboard
-            </h2>
+            <div>
+              <h2 className={`text-lg font-bold uppercase ${theme.text}`}>
+                Official Room Leaderboard
+              </h2>
+              <p className="text-xs font-bold uppercase tracking-wider text-amber-300">
+                {getRoomDisplayName(data?.room_name || localStorage.getItem('roomName'))}
+              </p>
+            </div>
             <span className="text-xs font-bold text-emerald-400 flex items-center space-x-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
               <span>SYNCHRONIZED WITH DATABASE</span>

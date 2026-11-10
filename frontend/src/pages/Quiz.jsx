@@ -1,8 +1,8 @@
-﻿import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useProctoring from '../hooks/useProctoring';
 import { getApiUrl } from '../config/api';
-import { getRoomTheme } from '../config/theme';
+import { getRoomTheme, getRoomDisplayName } from '../config/theme';
 
 export default function Quiz() {
   const { sessionToken } = useParams();
@@ -163,12 +163,17 @@ export default function Quiz() {
       {/* Top Header: Progress and Timer */}
       <div className={`flex justify-between items-center ${theme.headerBg} p-4 rounded-xl shadow-lg border-b-2 ${theme.border}`}>
         <div>
-          <span className={`text-lg font-extrabold ${theme.text}`}>
-            Question {currentIndex + 1} of {questions.length}
-          </span>
-          <span className={`ml-4 text-xs font-bold uppercase px-3 py-1 rounded-full ${theme.badge}`}>
-            {currentQ.marks || 1} {currentQ.marks === 1 ? 'Mark' : 'Marks'}
-          </span>
+          <div className="flex items-center space-x-3">
+            <span className={`text-lg font-extrabold ${theme.text}`}>
+              Question {currentIndex + 1} of {questions.length}
+            </span>
+            <span className={`text-xs font-bold uppercase px-3 py-1 rounded-full ${theme.badge}`}>
+              {currentQ.marks || 1} {currentQ.marks === 1 ? 'Mark' : 'Marks'}
+            </span>
+          </div>
+          <p className="text-xs font-extrabold uppercase tracking-wider text-amber-300 mt-1">
+            {getRoomDisplayName(roomIdentifier)}
+          </p>
         </div>
 
         <div className="flex items-center space-x-3">

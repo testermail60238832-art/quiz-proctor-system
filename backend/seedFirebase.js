@@ -13,31 +13,37 @@ async function seed() {
   console.log('Seeding Firebase Realtime Database with initial data...');
 
   try {
-    // 1. Seed Admins (Default password: adminpassword123)
-    const passwordHash = await bcrypt.hash('adminpassword123', 10);
+    // 1. Seed Admins (Default password: admin)
+    const passwordHash = await bcrypt.hash('admin', 10);
     const admins = {
+      admin: {
+        username: 'admin',
+        password_hash: passwordHash,
+        must_change_password: false,
+        created_at: Date.now()
+      },
       admin1: {
         username: 'admin1',
         password_hash: passwordHash,
-        must_change_password: true,
+        must_change_password: false,
         created_at: Date.now()
       },
       admin2: {
         username: 'admin2',
         password_hash: passwordHash,
-        must_change_password: true,
+        must_change_password: false,
         created_at: Date.now()
       }
     };
     await rtdb.ref('admins').set(admins);
-    console.log('✔ Admins created (admin1 & admin2 / adminpassword123)');
+    console.log('✔ Admins created (admin, admin1 & admin2 / password: admin)');
 
     // 2. Seed Rooms
     const rooms = {
       room_1: {
         id: 'room_1',
         room_code: 'ECE-R1',
-        room_name: 'Room 1 - Core Electronics',
+        room_name: 'Tech MCQs',
         time_per_question: 30,
         is_active: true,
         created_at: Date.now()
@@ -45,14 +51,14 @@ async function seed() {
       room_2: {
         id: 'room_2',
         room_code: 'ECE-R2',
-        room_name: 'Room 2 - Communication Systems',
+        room_name: 'Circuit & Code Arena',
         time_per_question: 30,
         is_active: true,
         created_at: Date.now()
       }
     };
     await rtdb.ref('rooms').set(rooms);
-    console.log('✔ Rooms created (ECE-R1 & ECE-R2)');
+    console.log('✔ Rooms created (ECE-R1: Tech MCQs & ECE-R2: Circuit & Code Arena)');
 
     // 3. Seed Question Placeholders (Room 1: 30 Questions)
     const questions = {
