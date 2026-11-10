@@ -86,8 +86,13 @@ export default function Landing() {
         </div>
       </div>
 
-      <div className="text-center text-xs text-slate-500 uppercase tracking-widest">
-        Strict Proctoring System Active • Blue & Gold Interface
+      <div className="text-center space-y-1.5 pt-6 pb-2">
+        <p className="text-sm font-black tracking-wider text-amber-400 uppercase drop-shadow-md">
+          Website Developed by K. Karthikeya Prasad
+        </p>
+        <p className="text-[11px] text-slate-400 uppercase tracking-widest font-semibold">
+          ECLECTICA II TECH-QUIZ • Strict Multi-Vector Proctoring
+        </p>
       </div>
     </div>
   );

@@ -10,11 +10,24 @@ const dbService = {
   // Rooms
   async getRoomByCode(code) {
     checkDb();
-    const snap = await rtdb.ref('rooms').orderByChild('room_code').equalTo(code).once('value');
-    const val = snap.val();
-    if (!val) return null;
-    const roomId = Object.keys(val)[0];
-    return { id: roomId, ...val[roomId] };
+    const clean = String(code || '').trim().toUpperCase();
+    const snap = await rtdb.ref('rooms').once('value');
+    const val = snap.val() || {};
+    for (const rId of Object.keys(val)) {
+      const room = val[rId];
+      const rCode = String(room.room_code || '').trim().toUpperCase();
+      if (
+        rCode === clean ||
+        clean === rId.toUpperCase() ||
+        (clean === 'R1' && rCode.includes('R1')) ||
+        (clean === 'R2' && rCode.includes('R2')) ||
+        (clean === 'ECE-R1' && rCode.includes('R1')) ||
+        (clean === 'ECE-R2' && rCode.includes('R2'))
+      ) {
+        return { id: rId, ...room };
+      }
+    }
+    return null;
   },
 
   async getAllRooms() {

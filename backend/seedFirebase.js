@@ -44,17 +44,231 @@ async function seed() {
         id: 'room_1',
         room_code: 'ECE-R1',
         room_name: 'Tech MCQs',
-        time_per_question: 30,
+        time_per_question: 20,
         is_active: true,
         created_at: Date.now()
       },
-      room_2: {
-        id: 'room_2',
-        room_code: 'ECE-R2',
-        room_name: 'Circuit & Code Arena',
-        time_per_question: 30,
-        is_active: true,
-        created_at: Date.now()
+            room_2: {
+              "q1": {
+                      "id": "q1",
+                      "question_text": "What is the output of the following Python code?\\nprint(2 ** 3)",
+                      "option_a": "6",
+                      "option_b": "8",
+                      "option_c": "9",
+                      "option_d": "5",
+                      "correct_option": "B",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q2": {
+                      "id": "q2",
+                      "question_text": "Which loop is guaranteed to execute at least once in C?",
+                      "option_a": "for loop",
+                      "option_b": "while loop",
+                      "option_c": "do-while loop",
+                      "option_d": "nested loop",
+                      "correct_option": "C",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q3": {
+                      "id": "q3",
+                      "question_text": "What is the index of the first element in a Python list?",
+                      "option_a": "0",
+                      "option_b": "1",
+                      "option_c": "-1",
+                      "option_d": "2",
+                      "correct_option": "A",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q4": {
+                      "id": "q4",
+                      "question_text": "Which loop is commonly used when the number of iterations is known in advance?",
+                      "option_a": "while",
+                      "option_b": "do-while",
+                      "option_c": "for",
+                      "option_d": "switch",
+                      "correct_option": "C",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q5": {
+                      "id": "q5",
+                      "question_text": "What is the default value of a local variable in C if it is not initialized?",
+                      "option_a": "0",
+                      "option_b": "1",
+                      "option_c": "NULL",
+                      "option_d": "Indeterminate value",
+                      "correct_option": "D",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q6": {
+                      "id": "q6",
+                      "question_text": "What is the order of a square matrix?",
+                      "option_a": "Number of rows only",
+                      "option_b": "Number of columns only",
+                      "option_c": "Equal number of rows and columns",
+                      "option_d": "Unequal number of rows and columns",
+                      "correct_option": "C",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q7": {
+                      "id": "q7",
+                      "question_text": "What is the period of the sine function?",
+                      "option_a": "90°",
+                      "option_b": "180°",
+                      "option_c": "270°",
+                      "option_d": "360°",
+                      "correct_option": "D",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q8": {
+                      "id": "q8",
+                      "question_text": "What does differentiation represent geometrically?",
+                      "option_a": "Area under a curve",
+                      "option_b": "Slope of a curve",
+                      "option_c": "Volume of a solid",
+                      "option_d": "Length of a curve",
+                      "correct_option": "B",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q9": {
+                      "id": "q9",
+                      "question_text": "Which rule is used to differentiate the product of two functions?",
+                      "option_a": "Chain rule",
+                      "option_b": "Product rule",
+                      "option_c": "Quotient rule",
+                      "option_d": "Power rule",
+                      "correct_option": "B",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q10": {
+                      "id": "q10",
+                      "question_text": "Which property states that a + b = b + a?",
+                      "option_a": "Associative property",
+                      "option_b": "Distributive property",
+                      "option_c": "Commutative property",
+                      "option_d": "Identity property",
+                      "correct_option": "C",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q11": {
+                      "id": "q11",
+                      "question_text": "What is the value of the factorial of zero (0!)?",
+                      "option_a": "0",
+                      "option_b": "1",
+                      "option_c": "Undefined",
+                      "option_d": "−1",
+                      "correct_option": "B",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q12": {
+                      "id": "q12",
+                      "question_text": "Which company developed ChatGPT?",
+                      "option_a": "Google",
+                      "option_b": "Microsoft",
+                      "option_c": "OpenAI",
+                      "option_d": "Meta",
+                      "correct_option": "C",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q13": {
+                      "id": "q13",
+                      "question_text": "Who is known as the Father of Computers?",
+                      "option_a": "Alan Turing",
+                      "option_b": "Charles Babbage",
+                      "option_c": "Bill Gates",
+                      "option_d": "Tim Berners-Lee",
+                      "correct_option": "B",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q14": {
+                      "id": "q14",
+                      "question_text": "What is the capital of Australia?",
+                      "option_a": "Sydney",
+                      "option_b": "Melbourne",
+                      "option_c": "Canberra",
+                      "option_d": "Perth",
+                      "correct_option": "C",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q15": {
+                      "id": "q15",
+                      "question_text": "Which is the national space agency of India?",
+                      "option_a": "NASA",
+                      "option_b": "ESA",
+                      "option_c": "ISRO",
+                      "option_d": "DRDO",
+                      "correct_option": "C",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q16": {
+                      "id": "q16",
+                      "question_text": "Which processor series is designed by Apple for its iPhones?",
+                      "option_a": "Intel Core",
+                      "option_b": "Snapdragon",
+                      "option_c": "Apple A-series",
+                      "option_d": "AMD Ryzen",
+                      "correct_option": "C",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q17": {
+                      "id": "q17",
+                      "question_text": "Which famous philosopher was born in Madanapalle?",
+                      "option_a": "Swami Vivekananda",
+                      "option_b": "Jiddu Krishnamurti",
+                      "option_c": "Sri Aurobindo",
+                      "option_d": "Ramana Maharshi",
+                      "correct_option": "B",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q18": {
+                      "id": "q18",
+                      "question_text": "Who established Besant Theosophical College in Madanapalle?",
+                      "option_a": "Sarojini Naidu",
+                      "option_b": "Annie Besant",
+                      "option_c": "Margaret Cousins",
+                      "option_d": "Kamala Nehru",
+                      "correct_option": "B",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q19": {
+                      "id": "q19",
+                      "question_text": "Which institution in Madanapalle is historically associated with Rabindranath Tagore's visit?",
+                      "option_a": "Besant Theosophical College",
+                      "option_b": "Andhra University",
+                      "option_c": "Sri Venkateswara University",
+                      "option_d": "Madras University",
+                      "correct_option": "A",
+                      "marks": 1,
+                      "is_active": true
+              },
+              "q20": {
+                      "id": "q20",
+                      "question_text": "Who helped write down the musical notation for the tune of Jana Gana Mana in Madanapalle?",
+                      "option_a": "Margaret Cousins",
+                      "option_b": "Annie Besant",
+                      "option_c": "Sarojini Naidu",
+                      "option_d": "Indira Gandhi",
+                      "correct_option": "A",
+                      "marks": 1,
+                      "is_active": true
+              }
       }
     };
     await rtdb.ref('rooms').set(rooms);

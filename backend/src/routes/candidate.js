@@ -118,7 +118,11 @@ router.get('/questions-init/:sessionToken', async (req, res) => {
       };
     });
 
-    return res.json({ total: prepared.length, questions: prepared });
+    const allRooms = await dbService.getAllRooms();
+    const currRoom = allRooms.find((r) => r.id === candidate.room_id);
+    const timePerQ = currRoom?.time_per_question || (candidate.room_id === 'room_2' ? 45 : 20);
+    const roomTitle = currRoom?.room_name || (candidate.room_id === 'room_2' ? 'Circuit & Code Arena' : 'Tech MCQs');
+    return res.json({ total: prepared.length, questions: prepared, timePerQuestion: timePerQ, roomName: roomTitle });
   } catch (err) {
     console.error('Questions-init error:', err);
     return res.status(500).json({ error: err.message });
